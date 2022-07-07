@@ -23,8 +23,8 @@ resource "auth0_client" "client" {
   name                = random_pet.client_name.id
   description         = "Application configured for nextauth"
   app_type            = "regular_web"
-  callbacks           = ["http://localhost:3000/api/auth/callback/auth0"]
-  allowed_logout_urls = ["http://localhost:3000/auth/logout"]
+  callbacks           = var.callbacks
+  allowed_logout_urls = var.allowed_logout_urls
   jwt_configuration {
     alg = "RS256"
   }
@@ -49,5 +49,5 @@ output "AUTH0_ISSUER" {
 
 output "AUTH0_LOGOUT_URL" {
   sensitive = true
-  value = "https://${data.auth0_tenant.current.domain}/v2/logout?client_id=${auth0_client.client.client_id}&returnTo=${urlencode("http://localhost:3000/auth/logout")}"
+  value = "https://${data.auth0_tenant.current.domain}/v2/logout?client_id=${auth0_client.client.client_id}&returnTo=${urlencode(var.allowed_logout_urls[0])}"
 }
