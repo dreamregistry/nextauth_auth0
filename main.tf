@@ -25,6 +25,9 @@ resource "auth0_client" "client" {
   app_type            = "regular_web"
   callbacks           = ["http://localhost:3000/api/auth/callback/auth0"]
   allowed_logout_urls = ["http://localhost:3000/auth/logout"]
+  jwt_configuration {
+    alg = "RS256"
+  }
 }
 
 output "AUTH0_CLIENT_ID" {
@@ -41,5 +44,5 @@ data "auth0_tenant" "current" {}
 
 output "AUTH0_ISSUER" {
   sensitive = true
-  value = "https://${data.auth0_tenant.current.domain}"
+  value     = "https://${data.auth0_tenant.current.domain}"
 }
