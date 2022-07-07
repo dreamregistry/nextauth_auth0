@@ -46,3 +46,8 @@ output "AUTH0_ISSUER" {
   sensitive = true
   value     = "https://${data.auth0_tenant.current.domain}"
 }
+
+output "AUTH0_LOGOUT_URL" {
+  sensitive = true
+  value = "https://${data.auth0_tenant.current.domain}/v2/logout?client_id=${auth0_client.client.client_id}&returnTo=${urlencode("http://localhost:3000/auth/logout")}"
+}
